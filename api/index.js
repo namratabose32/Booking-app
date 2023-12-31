@@ -57,7 +57,15 @@ app.post('/register', async (req, res) => {
     try {
         const { name, email, password } = req.body;
         console.log('Received data:', name, email, password);
-
+        if(!name){
+            res.status(422).json({error:"Name is required"});
+        }
+        if(!email){
+            res.status(422).json({error:"Email is required"});
+        }
+        if(!password){
+            res.status(422).json({error:"Password is required"});
+        }
         const hashedPassword = bcrypt.hashSync(password, bcryptSalt);
 
         const userDoc = await User.create({
